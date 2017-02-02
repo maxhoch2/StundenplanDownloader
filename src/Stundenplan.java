@@ -22,7 +22,7 @@ public class Stundenplan {
 
             String username = "schueler";
             String password = "SuS74!";
-            String url = "http://gymnasium-wuerselen.de/untis/Schueler-Stundenplan/03/c/c00005.htm";
+            String url = "http://gymnasium-wuerselen.de/untis/Schueler/f1/subst_002.htm";
             String login = username + ":" + password;
             String base64login = new String(Base64.encodeBase64(login.getBytes()));
 
@@ -34,8 +34,8 @@ public class Stundenplan {
             System.out.println("URL: " + url);
             System.out.println("Downloading page...");
             System.out.println("Extracting Timetable information...");
-            Whitelist wl = Whitelist.simpleText();
-            wl.addTags("b");
+
+
             org.jsoup.select.Elements rows = doc.select("tr");
             List<String> planList= new LinkedList<String>();
 
@@ -44,31 +44,13 @@ public class Stundenplan {
                 org.jsoup.select.Elements columns = row.select("td");
                 for (org.jsoup.nodes.Element column:columns)
                 {
-
-                    if(column.text().contains(" ")){
-                        String tmp = column.text();
-                        String tmp2 =  Jsoup.clean(column.html(),wl);
-                        if(Pattern.matches( "<b>[^ ]+</b>.+",  tmp2)){
-                            tmp2 = tmp2.replace("<b>","");
-                            //System.out.println(tmp2.indexOf("</b>")+" "+tmp2.length());
-                            tmp = tmp.substring(0,tmp2.indexOf("</b>"))+"%"+tmp.substring(tmp2.indexOf("</b>"),tmp.length()-1);
-                        }
-                        planList.add(tmp);
-                    }
-                    if(column.text().length() == 0){
-                        planList.add("FREE");
-                    }
-                    if(Pattern.matches( "[0-9][0-9]?",  column.text())){
-                        planList.add("Indicator:" + column.text());
-                    }
-                    if(column.text().equals("Pause")){
-                        planList.add("PAUSE");
-                    }
+                    System.out.print(" "+column.text());
                 }
+                System.out.println();
             }
             /*for(int i = 0; i<planList.size();i++){
                 System.out.println(planList.get(i));
-            }*/
+            }
 
             String[][] plan = new String[12][6];
             plan[0][0] = " ";
@@ -127,7 +109,7 @@ public class Stundenplan {
                 }
                 System.out.println();
                 System.out.println();
-            }
+            }*/
 
         }
 

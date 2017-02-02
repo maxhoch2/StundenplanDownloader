@@ -5,8 +5,20 @@ import java.io.IOException;
  */
 public class main {
     public static void main(String[] args)  throws IOException {
-        timetable Plan = new timetable(4,"c",5,"schueler","SuS74!");
+        timetable Plan = new timetable(4,"c",20,"schueler","SuS74!");
         Plan.update();
-        Plan.printPlan();
+        //Plan.print();
+        //System.out.println(Plan.getDate());
+        //System.out.println(Plan.getLevel());
+
+        substitutionplan SubPlan = new substitutionplan(1,1,"Schueler","schueler","SuS74!");
+        SubPlan.update();
+
+        substitutionplan SubPlanToADD = new substitutionplan(2,1,"Schueler","schueler","SuS74!");
+        SubPlanToADD.update();
+
+        SubPlan.add(SubPlanToADD);
+
+        SubPlan.print();
     }
 }

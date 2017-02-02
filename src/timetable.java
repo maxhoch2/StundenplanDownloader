@@ -4,6 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -14,13 +15,14 @@ import java.util.regex.Pattern;
 
 public class timetable {
     String urlArchive = "http://gymnasium-wuerselen.de/untis/Schueler-Stundenplan/";
+    String schoolname = "Gymnasium der Stadt Würselen";
     String url;
     String password;
     String username;
 
 
     //-------  info  -------
-    int week; //iso 8601 week number
+    int week; //Iso 8601 week number
 
     //from plan
     String[][] plan;
@@ -38,6 +40,14 @@ public class timetable {
     public void update() throws IOException {
         String base64login = new String(Base64.encodeBase64((username + ":" + password).getBytes())); // creating an encoded login
         Document doc = Jsoup.connect(url).header("Authorization", "Basic " + base64login).get(); //loading page.
+
+        String htmlraw = doc.html(); // get raw html
+        String[] htmlsplit = htmlraw.split("\\n"); // split raw html -> lines of the file in an array
+
+        //get information
+        level = htmlsplit[17].replace("<font size=\"5\" face=\"Arial\">","").replace("</font>","").replace(" ",""); // get level information
+        date = htmlraw.substring(htmlraw.indexOf("Periode"),htmlraw.indexOf(schoolname)); // get date information by getting string from "Periode" to the schoolname
+
         Whitelist wl = Whitelist.simpleText();
         wl.addTags("b");
         List<String> planList= new LinkedList<String>();
@@ -77,6 +87,9 @@ public class timetable {
                 }
             }
         }
+        /*for(int i = 0; i<planList.size();i++){
+            System.out.println(planList.get(i));
+        }*/
 
         // creating array
         plan = new String[12][6];
@@ -105,8 +118,8 @@ public class timetable {
 
             for(int i = 1;i<plan[0].length;i++){
 
-                // the next lines only exsist because the very good school system of our school. not.
-                if(row == 6 && i<=plan[0].length && Pattern.matches("[^ ]+ [^ ]+ [^ ]+ .+", plan[5][i])){
+                // the next lines only exsists because of the very good system of our school. not.
+                if((row == 11 || row == 9 ||row == 6 )&& i<plan[0].length-1 && (plan[5][i] == "FREE" || plan[5][i] == null || Pattern.matches("[^ ]+ [^ ]+ [^ ]+ .+", plan[5][i]))){
                     i++;
                     //System.out.println("Done");
                 }
@@ -137,7 +150,7 @@ public class timetable {
         }
     }
 
-    public void printPlan(){
+    public void print(){
         for(int i = 0; i<plan.length; i++)
         {
             for(int j = 0; j<plan[0].length; j++)
