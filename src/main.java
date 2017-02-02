@@ -20,5 +20,8 @@ public class main {
         SubPlan.add(SubPlanToADD);
 
         SubPlan.print();
+        System.out.println(SubPlan.getPlanIndex()+" / "+SubPlan.getMaxPlans());
+        System.out.println(SubPlan.getWeek());
+        System.out.println(SubPlan.getDate());
     }
 }

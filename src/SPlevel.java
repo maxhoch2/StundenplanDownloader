@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by maxnu on 02.02.2017.
+ * Created by Max Nuglisch on 02.02.2017.
  */
 public class SPlevel {
     public String title;

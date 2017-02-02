@@ -6,10 +6,11 @@ import org.jsoup.safety.Whitelist;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by maxnu on 02.02.2017.
+ * Created by Max Nuglisch on 02.02.2017.
  */
 public class substitutionplan {
     String urlArchive = "http://gymnasium-wuerselen.de/untis/";
@@ -86,6 +87,39 @@ public class substitutionplan {
         }
     }
 
+    public String getDate(){
+        Matcher m = Pattern.compile("[0-9]{1,2}.[0-9]{1,2}.[0-9][0-9][0-9][0-9]").matcher(info);
+        if(m.find()){
+            return m.group();
+        }
+        return null;
+    }
+    public String getWeek(){
+        Matcher m = Pattern.compile(", Woche [AB]").matcher(info);
+        if(m.find()){
+            return m.group().replace(", Woche ","");
+        }
+        return null;
+
+    }
+    public int getPlanIndex(){
+        String tmp;
+        Matcher m = Pattern.compile("\\(Seite [0-9]+ \\/ [0-9]+\\)").matcher(info);
+        if(m.find()){
+            tmp = m.group();
+        }else return 0;
+        tmp = tmp.replace(" ","");
+        return Integer.parseInt(tmp.substring(tmp.indexOf("te")+2,tmp.indexOf("/")));
+    }
+    public int getMaxPlans(){
+        String tmp;
+        Matcher m = Pattern.compile("\\(Seite [0-9]+ \\/ [0-9]+\\)").matcher(info);
+        if(m.find()){
+            tmp = m.group();
+        }else return 0;
+        tmp = tmp.replace(" ","");
+        return Integer.parseInt(tmp.substring(tmp.indexOf("/")+1,tmp.indexOf(")")));
+    }
 
     public List<SPlevel> getPlan() {
         return SP;
