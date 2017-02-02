@@ -63,7 +63,7 @@ public class substitutionplan {
 
         for(int i = 0; i < planList.size(); i++){
             String tmp = planList.get(i);
-            if(Pattern.matches( " [^ ]+ [^ -]+-[^ -]+-[^ -]+", tmp)){
+            if(Pattern.matches( " [^ ]+ [^ -]+-[^ -]+-[^ -]+", tmp)||Pattern.matches( " [^ ]+", tmp)){
                 SP.add(new SPlevel(tmp));
             }else if (tmp.length() > 0 && SP.size() > 0){
                 SP.get(SP.size()-1).listings.add(tmp);
@@ -138,6 +138,9 @@ public class substitutionplan {
         return User;
     }
 
+    public SPlevel getEntry(int i){
+        return SP.get(i);
+    }
     public void print(){
         for(int i = 0; i < SP.size(); i++){
             SP.get(i).print();
