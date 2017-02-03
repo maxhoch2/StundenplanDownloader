@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * Created by Max Nuglisch on 01.02.2017.
  */
 
-public class timetable {
+public class Timetable {
     String urlArchive = "http://gymnasium-wuerselen.de/untis/Schueler-Stundenplan/";
     String schoolname = "Gymnasium der Stadt Würselen";
     String url;
@@ -30,7 +30,7 @@ public class timetable {
     String date; //Date of the Plan
 
 
-    public timetable(int week, String type, int number, String username, String password){
+    public Timetable(int week, String type, int number, String username, String password){
         url = urlArchive + IntToFixString(week,2) + "/" + type + "/" + type + IntToFixString(number,5) + ".htm";
         this.week = week;
         this.password = password;
@@ -130,7 +130,7 @@ public class timetable {
                     tmp = planList.get(currentLine);
                 }else break;
 
-                //if line is a timetable object
+                //if line is a Timetable object
                 if(Pattern.matches("[^ ]+ [^ ]+ [^ ]+.+",  tmp)){
                     plan[row][i] = tmp;
                     currentLine++;

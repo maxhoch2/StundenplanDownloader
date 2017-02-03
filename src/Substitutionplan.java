@@ -1,7 +1,6 @@
 import org.apache.commons.codec.binary.Base64;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -12,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Max Nuglisch on 02.02.2017.
  */
-public class substitutionplan {
+public class Substitutionplan {
     String urlArchive = "http://gymnasium-wuerselen.de/untis/";
     String url;
     String User;
@@ -23,7 +22,7 @@ public class substitutionplan {
     int day; // 1 = Today    2 = Tomorrow
     String info; //Date of the Plan
 
-    public substitutionplan(int index, int day, String User, String username, String password){
+    public Substitutionplan(int index, int day, String User, String username, String password){
         url = urlArchive + User + "/f" + day + "/" + "subst_" + IntToFixString(index, 3) + ".htm";
         this.username = username;
         this.password = password;
@@ -71,7 +70,7 @@ public class substitutionplan {
         }
     }
 
-    public void add(substitutionplan plan){
+    public void add(Substitutionplan plan){
         List<SPlevel> SPtoAdd = plan.getPlan();
         if(SPtoAdd == null || SP ==null){
             return;

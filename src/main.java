@@ -6,7 +6,7 @@ import java.io.IOException;
 public class main {
     public static void main(String[] args)  throws IOException {
 
-        timetable Plan = new timetable(3,"c",21,"schueler","SuS74!");
+        Timetable Plan = new Timetable(6,"c",20,"schueler","SuS74!");
         Plan.update();
 
         System.out.println(Plan.getDate());
@@ -19,10 +19,10 @@ public class main {
         System.out.println("###################################################################################################");
         System.out.println();
 
-        substitutionplan SubPlan = new substitutionplan(1,2,"Schueler","schueler","SuS74!");
+        Substitutionplan SubPlan = new Substitutionplan(1,2,"Schueler","schueler","SuS74!");
         SubPlan.update();
         for(int i = 2; i < SubPlan.getMaxPlans()+1; i++){
-            substitutionplan SubPlanToADD = new substitutionplan(i,2,"Schueler","schueler","SuS74!");
+            Substitutionplan SubPlanToADD = new Substitutionplan(i,2,"Schueler","schueler","SuS74!");
             SubPlanToADD.update();
             SubPlan.add(SubPlanToADD);
         }
